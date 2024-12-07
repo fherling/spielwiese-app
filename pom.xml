@@ -196,9 +196,10 @@
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>7.9.0</version>
+                <version>7.10.0</version>
                 <executions>
                     <execution>
+                        <id>order</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
@@ -206,8 +207,37 @@
                             <inputSpec>${project.basedir}/src/main/resources/openapi/order.yaml</inputSpec>
                             <output>${project.build.directory}/generated-sources/openapi</output>
                             <generatorName>spring</generatorName>
-                            <apiPackage>de.frankherling.spielwiese.app.infrastructure.adapter.rest.api</apiPackage>
-                            <modelPackage>de.frankherling.spielwiese.app.infrastructure.adapter.rest.model</modelPackage>
+                            <apiPackage>de.frankherling.spielwiese.app.infrastructure.adapter.rest.order.api</apiPackage>
+                            <modelPackage>de.frankherling.spielwiese.app.infrastructure.adapter.rest.order.model</modelPackage>
+                            <configOptions>
+                                <interfaceOnly>true</interfaceOnly>
+                                <library>spring-boot</library>
+                                <dateLibrary>java8</dateLibrary>
+                                <useTags>true</useTags>
+                                <useBeanValidation>true</useBeanValidation>
+                                <useOptional>true</useOptional>
+                                <useJsr310>true</useJsr310>
+                                <useJakartaEe>true</useJakartaEe>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <openApiNullable>false</openApiNullable>
+                                <generateModelTests>false</generateModelTests>
+                                <generateSupportingFiles>false</generateSupportingFiles>
+                                <generateApiTests>false</generateApiTests>
+                                <skipValidateSpec>true</skipValidateSpec>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>payment</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi/payment.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-sources/openapi</output>
+                            <generatorName>spring</generatorName>
+                            <apiPackage>de.frankherling.spielwiese.app.infrastructure.adapter.rest.payment.api</apiPackage>
+                            <modelPackage>de.frankherling.spielwiese.app.infrastructure.adapter.rest.payment.model</modelPackage>
                             <configOptions>
                                 <interfaceOnly>true</interfaceOnly>
                                 <library>spring-boot</library>

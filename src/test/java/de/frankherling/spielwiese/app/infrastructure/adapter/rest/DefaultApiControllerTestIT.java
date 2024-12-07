@@ -1,6 +1,6 @@
 package de.frankherling.spielwiese.app.infrastructure.adapter.rest;
 
-import de.frankherling.spielwiese.app.infrastructure.adapter.rest.model.Order;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

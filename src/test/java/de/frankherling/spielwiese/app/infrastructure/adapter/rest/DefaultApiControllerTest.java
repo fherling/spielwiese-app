@@ -1,6 +1,6 @@
 package de.frankherling.spielwiese.app.infrastructure.adapter.rest;
 
-import de.frankherling.spielwiese.app.infrastructure.adapter.rest.model.Order;
+import de.frankherling.spielwiese.app.infrastructure.adapter.rest.order.model.Order;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;

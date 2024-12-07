@@ -1,7 +1,7 @@
 package de.frankherling.spielwiese.app.infrastructure.adapter.rest;
 
-import de.frankherling.spielwiese.app.infrastructure.adapter.rest.api.DefaultApi;
-import de.frankherling.spielwiese.app.infrastructure.adapter.rest.model.Order;
+import de.frankherling.spielwiese.app.infrastructure.adapter.rest.order.api.DefaultApi;
+import de.frankherling.spielwiese.app.infrastructure.adapter.rest.order.model.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
