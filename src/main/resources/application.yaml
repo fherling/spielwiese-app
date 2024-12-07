@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: TheApplication
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db
+    username: user
+    password: pwd
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      idle-timeout: 10000
+      pool-name: HikariCP
+      connection-timeout: 30000
+      max-lifetime: 2000000
+      connection-test-query: SELECT 1
+      auto-commit: false
+  sql:
+    init:
+      platform: postgres
+      mode: always
+      schema-locations: classpath:init.sql
+  jpa:
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    open-in-view: false
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+  artemis:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
