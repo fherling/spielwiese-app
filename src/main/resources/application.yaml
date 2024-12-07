@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: TheApplication
@@ -35,3 +36,6 @@ spring:
     broker-url: tcp://localhost:61616
     user: admin
     password: admin
+  threads:
+    virtual:
+      enabled: true

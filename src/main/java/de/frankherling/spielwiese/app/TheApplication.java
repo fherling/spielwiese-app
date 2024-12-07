@@ -1,4 +1,4 @@
-package de.entwicklerheld.copilot;
+package de.frankherling.spielwiese.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

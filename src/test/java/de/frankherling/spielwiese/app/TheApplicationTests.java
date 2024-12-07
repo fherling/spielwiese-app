@@ -1,4 +1,4 @@
-package de.entwicklerheld.copilot;
+package de.frankherling.spielwiese.app;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
