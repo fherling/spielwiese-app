@@ -38,6 +38,6 @@ jobs:
           password: ${{ secrets.REPO_TOKEN }}
       - name: Build and push Docker image
         run: |
-          IMAGE_NAME=ghcr.io/${{ github.actor }}/app:latest
+          IMAGE_NAME=ghcr.io/${{ github.repository }}/app:latest
           mvn spring-boot:build-image -Dspring-boot.build-image.imageName=$IMAGE_NAME  -DskipTests=true
           docker push $IMAGE_NAME
