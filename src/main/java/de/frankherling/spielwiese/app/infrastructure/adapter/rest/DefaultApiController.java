@@ -25,6 +25,7 @@ public class DefaultApiController implements DefaultApi {
     public ResponseEntity<Order> ordersOrderIdGet(String orderId) {
         // Add dummy data for demonstration
         Order order = new Order();
+        order.setId(orderId);
         return ResponseEntity.ok(order);
     }
 
