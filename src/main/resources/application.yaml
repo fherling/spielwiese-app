@@ -1,14 +1,34 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
 
 spring:
   application:
     name: TheApplication
+  config:
+    import: optional:file:/spring-config/application-optional.yaml
+  cache:
+    type: simple
+    cache-names: [default, cache1]
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuerUri: http://keycloak.local/realms/spielwiese-realm
+          jwkSetUri: http://keycloak.local/realms/spielwiese-realm/protocol/openid-connect/certs
   datasource:
-    url: jdbc:postgresql://localhost:5432/db
+    url: jdbc:postgresql://postgres.local:5432/db
     username: user
     password: pwd
     driver-class-name: org.postgresql.Driver
     hikari:
-      maximum-pool-size: 5
+      maximum-pool-size: 10
       minimum-idle: 1
       idle-timeout: 10000
       pool-name: HikariCP
@@ -33,9 +53,48 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
   artemis:
-    broker-url: tcp://localhost:61616
+    broker-url: tcp://artemis.local:61616
     user: admin
     password: admin
   threads:
     virtual:
       enabled: true
+  codec:
+    max-in-memory-size: 50MB
+  jackson:
+    default-property-inclusion: non_null
+management:
+  health:
+    jms:
+      enabled: true
+    db:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      group:
+        livenessprobe:
+          include: ping
+        readinessprobe:
+          include: db,jms,ping
+        startupprobe:
+          include: db,jms,ping
+    prometheus:
+      access: unrestricted
+  opentelemetry:
+    exporter:
+      jaeger:
+        endpoint: http://jaeger.local:4318/v1/traces
+    resource-attributes:
+      instrumentation.provider: micrometer
+      service.name: ${appplication.name}
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+

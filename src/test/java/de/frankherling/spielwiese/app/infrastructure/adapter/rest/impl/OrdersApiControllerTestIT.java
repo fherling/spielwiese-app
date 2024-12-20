@@ -1,4 +1,4 @@
-package de.frankherling.spielwiese.app.infrastructure.adapter.rest;
+package de.frankherling.spielwiese.app.infrastructure.adapter.rest.impl;
 
 
 import org.junit.jupiter.api.Test;
@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -16,14 +17,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class DefaultApiControllerTestIT {
+class OrdersApiControllerTestIT {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     void testOrdersGet() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/orders")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/orders")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
@@ -32,17 +33,18 @@ class DefaultApiControllerTestIT {
     @Test
     void testOrdersOrderIdGet() throws Exception {
         String orderId = UUID.randomUUID().toString();
-        mockMvc.perform(MockMvcRequestBuilders.get("/orders/{orderId}", orderId)
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/orders/{orderId}", orderId)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(orderId));
     }
 
     @Test
+//    @WithMockUser(username = "user", roles = "USER")
     void testOrdersPost() throws Exception {
         String orderJson = "{\"item\":\"item\",\"quantity\":1,\"price\":10.0}";
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/orders")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/orders")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(orderJson))
                 .andExpect(status().isCreated())

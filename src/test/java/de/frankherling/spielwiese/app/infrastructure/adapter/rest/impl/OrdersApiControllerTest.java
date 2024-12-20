@@ -1,4 +1,4 @@
-package de.frankherling.spielwiese.app.infrastructure.adapter.rest;
+package de.frankherling.spielwiese.app.infrastructure.adapter.rest.impl;
 
 import de.frankherling.spielwiese.app.infrastructure.adapter.rest.order.model.Order;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,18 +11,18 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class DefaultApiControllerTest {
+class OrdersApiControllerTest {
 
-    private DefaultApiController defaultApiController;
+    private OrdersApiController ordersApiController;
 
     @BeforeEach
     void setUp() {
-        defaultApiController = new DefaultApiController();
+        ordersApiController = new OrdersApiController();
     }
 
     @Test
     void testOrdersGet() {
-        ResponseEntity<List<Order>> response = defaultApiController.ordersGet();
+        ResponseEntity<List<Order>> response = ordersApiController.getOrders();
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
         assertEquals(2, response.getBody().size());
@@ -31,7 +31,7 @@ class DefaultApiControllerTest {
     @Test
     void testOrdersOrderIdGet() {
         String orderId = UUID.randomUUID().toString();
-        ResponseEntity<Order> response = defaultApiController.ordersOrderIdGet(orderId);
+        ResponseEntity<Order> response = ordersApiController.getOrderById(orderId);
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
         assertEquals(orderId, response.getBody().getId());
@@ -44,7 +44,7 @@ class DefaultApiControllerTest {
         order.setQuantity(1);
         order.setPrice(10.0f);
 
-        ResponseEntity<Order> response = defaultApiController.ordersPost(order);
+        ResponseEntity<Order> response = ordersApiController.createOrder(order);
         assertEquals(201, response.getStatusCodeValue());
         assertNotNull(response.getBody());
         assertNotNull(response.getBody().getId());

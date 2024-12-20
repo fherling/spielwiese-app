@@ -5,10 +5,16 @@ info:
   version: 1.0.0
 servers:
   - url: http://localhost:8080/api
+tags:
+  - name: payments
+    description: Payment operations
 paths:
-  /payments:
+  /api/payments:
     get:
       summary: Get all payments
+      operationId: getPayments
+      tags:
+        - payments
       responses:
         '200':
           description: A list of payments
@@ -20,6 +26,9 @@ paths:
                   $ref: '#/components/schemas/payment'
     post:
       summary: Create a new payment
+      operationId: createPayment
+      tags:
+        - payments
       requestBody:
         required: true
         content:
@@ -33,9 +42,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/payment'
-  /payments/{paymentId}:
+  /api/payments/{paymentId}:
     get:
       summary: Get an payment by ID
+      operationId: getPaymentById
+      tags:
+        - payments
       parameters:
         - name: paymentId
           in: path

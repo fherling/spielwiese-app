@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.6</version>
+        <version>3.4.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>de.frankherling.spielwiese</groupId>
@@ -31,6 +32,10 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
@@ -55,8 +60,12 @@
             <artifactId>spring-boot-starter-web-services</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-tracing-bridge-brave</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -64,15 +73,15 @@
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.7.0</version>
+            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+            <version>2.7.0</version>
         </dependency>
 
         <dependency>
             <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-otlp</artifactId>
-            <scope>runtime</scope>
+            <artifactId>micrometer-tracing-bridge-otel</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -117,6 +126,11 @@
                     <artifactId>junit</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -207,8 +221,12 @@
                             <inputSpec>${project.basedir}/src/main/resources/openapi/order.yaml</inputSpec>
                             <output>${project.build.directory}/generated-sources/openapi</output>
                             <generatorName>spring</generatorName>
-                            <apiPackage>de.frankherling.spielwiese.app.infrastructure.adapter.rest.order.api</apiPackage>
-                            <modelPackage>de.frankherling.spielwiese.app.infrastructure.adapter.rest.order.model</modelPackage>
+                            <apiPackage>
+                                de.frankherling.spielwiese.app.infrastructure.adapter.rest.order.api
+                            </apiPackage>
+                            <modelPackage>
+                                de.frankherling.spielwiese.app.infrastructure.adapter.rest.order.model
+                            </modelPackage>
                             <configOptions>
                                 <interfaceOnly>true</interfaceOnly>
                                 <library>spring-boot</library>
@@ -236,8 +254,12 @@
                             <inputSpec>${project.basedir}/src/main/resources/openapi/payment.yaml</inputSpec>
                             <output>${project.build.directory}/generated-sources/openapi</output>
                             <generatorName>spring</generatorName>
-                            <apiPackage>de.frankherling.spielwiese.app.infrastructure.adapter.rest.payment.api</apiPackage>
-                            <modelPackage>de.frankherling.spielwiese.app.infrastructure.adapter.rest.payment.model</modelPackage>
+                            <apiPackage>
+                                de.frankherling.spielwiese.app.infrastructure.adapter.rest.payment.api
+                            </apiPackage>
+                            <modelPackage>
+                                de.frankherling.spielwiese.app.infrastructure.adapter.rest.payment.model
+                            </modelPackage>
                             <configOptions>
                                 <interfaceOnly>true</interfaceOnly>
                                 <library>spring-boot</library>

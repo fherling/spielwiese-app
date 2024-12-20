@@ -4,7 +4,7 @@ databaseChangeLog:
       author: fherling
       changes:
         - createTable:
-            tableName: example_table
+            tableName: payments
             columns:
               - column:
                   name: id

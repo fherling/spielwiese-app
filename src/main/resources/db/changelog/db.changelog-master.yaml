@@ -1,3 +1,7 @@
 databaseChangeLog:
-  - include:
-      file: classpath:db/changelog/db.changelog-1.0.yaml
+  - includeAll:
+      path: initial
+      relativeToChangelogFile: true
+  - includeAll:
+      path: changes
+      relativeToChangelogFile: true
