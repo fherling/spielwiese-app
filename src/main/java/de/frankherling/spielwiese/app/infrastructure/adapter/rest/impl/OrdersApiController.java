@@ -1,5 +1,6 @@
 package de.frankherling.spielwiese.app.infrastructure.adapter.rest.impl;
 
+import de.frankherling.spielwiese.app.application.port.OrdersPort;
 import de.frankherling.spielwiese.app.application.service.OrdersService;
 import de.frankherling.spielwiese.app.infrastructure.adapter.rest.mappers.OrdersMapper;
 import de.frankherling.spielwiese.app.infrastructure.adapter.rest.order.api.OrdersApi;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OrdersApiController implements OrdersApi {
 
-    private final OrdersService ordersService;
+    private final OrdersPort ordersService;
     private final OrdersMapper ordersMapper;
 
     @Override
