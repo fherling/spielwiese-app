@@ -1,7 +1,6 @@
 package de.frankherling.spielwiese.app.infrastructure.adapter.rest.impl;
 
-import de.frankherling.spielwiese.app.application.port.OrdersPort;
-import de.frankherling.spielwiese.app.application.service.OrdersService;
+import de.frankherling.spielwiese.app.application.port.in.OrdersPort;
 import de.frankherling.spielwiese.app.infrastructure.adapter.rest.mappers.OrdersMapper;
 import de.frankherling.spielwiese.app.infrastructure.adapter.rest.order.api.OrdersApi;
 import de.frankherling.spielwiese.app.infrastructure.adapter.rest.order.model.Order;
@@ -9,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

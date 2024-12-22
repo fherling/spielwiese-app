@@ -66,6 +66,11 @@ paths:
 components:
   schemas:
     Order:
+      required:
+        - id
+        - item
+        - quantity
+        - price
       type: object
       properties:
         id:

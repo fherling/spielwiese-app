@@ -1,0 +1,21 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuerUri: http://keycloak.local/realms/spielwiese-realm
+          jwkSetUri: http://keycloak.local/realms/spielwiese-realm/protocol/openid-connect/certs
+  datasource:
+    url: jdbc:postgresql://postgres.local:5432/db
+    username: user
+    password: pwd
+  artemis:
+    broker-url: tcp://artemis.local:61616
+    user: admin
+    password: admin
+  opentelemetry:
+    exporter:
+      jaeger:
+        endpoint: http://jaeger.local/v1/traces
+tracing:
+  url: http://jaeger.local:4318/v1/traces

@@ -1,4 +1,4 @@
-package de.frankherling.spielwiese.app.infrastructure.adapter.jms.configuration;
+package de.frankherling.spielwiese.app.infrastructure.adapter.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

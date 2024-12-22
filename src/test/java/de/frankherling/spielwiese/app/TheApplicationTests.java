@@ -15,9 +15,10 @@ class TheApplicationTests {
 
     @Container
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
-            .withDatabaseName("test")
+            .withInitScripts("preliquibase/postgresql.sql")
+            .withDatabaseName("db")
             .withUsername("user")
-            .withPassword("password");
+            .withPassword("pwd");
 
     @Container
     static GenericContainer<?> artemis = new GenericContainer<>("vromero/activemq-artemis:latest")
@@ -25,7 +26,7 @@ class TheApplicationTests {
 
     @DynamicPropertySource
     static void registerProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
+        registry.add("spring.datasource.url", () -> (postgres.getJdbcUrl()) + "?currentSchema=app");
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
         registry.add("spring.artemis.broker-url", () -> "tcp://" + artemis.getHost() + ":" + artemis.getMappedPort(61616));
