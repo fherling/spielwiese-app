@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @ConditionalOnProperty(value = "adapter.jms.enabled", havingValue = "true")
 public class OrderCreatedConsumer {
 
-    @JmsListener(destination = "order-created-queue", concurrency = "3-10")
+    @JmsListener(destination = "order-created-queue", concurrency = "1")
     public void receiveOrderCreated(OrderCreatedDTO message) {
         log.info("Received message: {}", message);
         // Add your message processing logic here

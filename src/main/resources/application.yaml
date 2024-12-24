@@ -6,10 +6,15 @@ logging:
   level:
     org:
       springframework:
-        security: DEBUG
+        security: WARN
+        transaction: WARN
     net:
-      lbruun: DEBUG
-
+      lbruun: WARN
+    org.hibernate.SQL: WARN
+    org.hibernate.stat: WARN
+    org.hibernate: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+    io.micrometer.core.instrument.binder.db: WARN
 spring:
   application:
     name: TheApplication
@@ -43,6 +48,8 @@ spring:
     init:
 #      platform: postgres
       mode: always
+  jta:
+    enabled: true
   jpa:
     database: postgresql
     show-sql: true
@@ -108,3 +115,6 @@ springdoc:
 
 tracing:
   url: http://jaeger:4318/v1/traces
+adapter:
+  jms:
+    enabled: true

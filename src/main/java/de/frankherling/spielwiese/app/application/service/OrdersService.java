@@ -1,6 +1,7 @@
 package de.frankherling.spielwiese.app.application.service;
 
 import de.frankherling.spielwiese.app.application.port.in.OrdersPort;
+import de.frankherling.spielwiese.app.application.port.out.OutboxPort;
 import de.frankherling.spielwiese.app.application.service.mappers.OrderEntityMapper;
 import de.frankherling.spielwiese.app.domain.model.Order;
 import de.frankherling.spielwiese.app.infrastructure.adapter.jpa.outbox.OrdersRepository;
@@ -28,6 +29,7 @@ public class OrdersService implements OrdersPort {
 
     private final OrdersRepository repository;
     private final OrderEntityMapper mapper;
+    private final OutboxPort outboxPort;
 
     @Override
     @Timed
@@ -54,10 +56,12 @@ public class OrdersService implements OrdersPort {
     @Counted
     @Transactional(propagation = Propagation.REQUIRED)
     public Order createOrder(@Valid @NotNull Order order) {
-        log.info("Creating order: {}", order);
+//        log.info("Creating order: {}", order);
         OrderEntity result = repository.save(mapper.toEntity(order));
 
-
+        outboxPort.addMessage("Order created: " + order.getId());
         return mapper.toOrder(result);
     }
+
+
 }

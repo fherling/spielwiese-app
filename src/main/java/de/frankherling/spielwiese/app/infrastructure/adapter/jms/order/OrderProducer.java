@@ -25,11 +25,14 @@ public class OrderProducer {
     }
 
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 1000)
     public void scheduleOrder() {
-        createOrder(CreateOrderDTO.builder()
-                .id(UUID.randomUUID().toString())
-                .createdAt(OffsetDateTime.now())
-                .build());
+        for (int i = 0; i < 2; i++) {
+            createOrder(CreateOrderDTO.builder()
+                    .id(UUID.randomUUID().toString())
+                    .createdAt(OffsetDateTime.now())
+                    .build());
+        }
+
     }
 }

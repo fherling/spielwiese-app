@@ -9,9 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 @Slf4j
 @RequiredArgsConstructor
 @ConditionalOnProperty(value = "adapter.jms.enabled", havingValue = "true")
@@ -20,7 +19,7 @@ public class CreateOrderConsumer {
 
     private final OrdersPort service;
 
-    @JmsListener(destination = "create-order-queue", concurrency = "3-10")
+    @JmsListener(destination = "create-order-queue", concurrency = "1")
     @SendTo("order-created-queue")
     public OrderCreatedDTO receiveCreateOrder(CreateOrderDTO message) {
         log.info("Received message: {}", message);

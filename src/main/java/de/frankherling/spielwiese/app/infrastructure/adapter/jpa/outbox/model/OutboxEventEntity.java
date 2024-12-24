@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "outbox")
@@ -31,7 +31,7 @@ public class OutboxEventEntity {
     private String payload;
 
     @Column(nullable = false, name = "created_at")
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
 
 
 }
