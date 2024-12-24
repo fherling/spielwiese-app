@@ -7,15 +7,25 @@ databaseChangeLog:
             tableName: orders
             columns:
               - column:
-                  name: oid
+                  name: id
                   type: bigint
                   autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: id
+                  name: order_id
                   type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order_status
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order_type
+                  type: text
                   constraints:
                     nullable: false
               - column:
@@ -23,6 +33,16 @@ databaseChangeLog:
                   type: timestamptz
                   constraints:
                       nullable: false
+              - column:
+                  name: modified_at
+                  type: timestamptz
+                  constraints:
+                    nullable: true
+              - column:
+                  name: version
+                  type: int
+                  constraints:
+                    nullable: false
         - addUniqueConstraint:
             columnNames: id
             tableName: orders

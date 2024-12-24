@@ -4,16 +4,19 @@ import de.frankherling.spielwiese.app.application.port.in.OrdersPort;
 import de.frankherling.spielwiese.app.domain.model.Order;
 import de.frankherling.spielwiese.app.infrastructure.adapter.jms.order.model.CreateOrderDTO;
 import de.frankherling.spielwiese.app.infrastructure.adapter.jms.order.model.OrderCreatedDTO;
+import jakarta.annotation.security.RunAs;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 @Slf4j
 @RequiredArgsConstructor
 @ConditionalOnProperty(value = "adapter.jms.enabled", havingValue = "true")
+@RunAs("APPUSER")
 public class CreateOrderConsumer {
     private final OrdersDTOMapper mapper;
 
@@ -21,6 +24,7 @@ public class CreateOrderConsumer {
 
     @JmsListener(destination = "create-order-queue", concurrency = "1")
     @SendTo("order-created-queue")
+
     public OrderCreatedDTO receiveCreateOrder(CreateOrderDTO message) {
         log.info("Received message: {}", message);
 

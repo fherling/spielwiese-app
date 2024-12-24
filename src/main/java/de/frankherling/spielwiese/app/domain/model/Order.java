@@ -8,7 +8,9 @@ import java.time.OffsetDateTime;
 @Data
 @Builder
 public class Order {
-    private String id;
+    private String orderId;
     private OffsetDateTime createdAt;
-
+    private OffsetDateTime modefiedAt;
+    private String orderStatus;
+    private String orderType;
 }

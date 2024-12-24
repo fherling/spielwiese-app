@@ -59,7 +59,7 @@ class OrdersApiControllerTestIT {
     private OrdersPort ordersPort;
 
     @Test
-    @WithMockUser(username = "user", roles = "USER")
+    @WithMockUser(username = "user", roles = "APPUSER")
     void testOrdersGet() throws Exception {
         List<Order> orders = new ArrayList<>();
         // Add dummy data for demonstration
@@ -77,7 +77,7 @@ class OrdersApiControllerTestIT {
     }
 
     @Test
-    @WithMockUser(username = "user", roles = "USER")
+    @WithMockUser(username = "user", roles = "APPUSER")
     void testOrdersOrderIdGet() throws Exception {
         String orderId = UUID.randomUUID().toString();
         mockMvc.perform(MockMvcRequestBuilders.get("/api/orders/{orderId}", orderId)
@@ -87,7 +87,7 @@ class OrdersApiControllerTestIT {
     }
 
     @Test
-    @WithMockUser(username = "user", roles = "USER")
+    @WithMockUser(username = "user", roles = "APPUSER")
     void testOrdersPost() throws Exception {
         String orderJson = "{\"id\":\"id\", \"item\":\"item\",\"quantity\":1,\"price\":10.0}";
 

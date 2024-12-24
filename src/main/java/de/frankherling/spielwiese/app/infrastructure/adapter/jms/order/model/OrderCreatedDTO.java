@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 
 @Data
@@ -18,8 +19,8 @@ public class OrderCreatedDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = -1692096220630472706L;
 
-    private String id;
-    
+    private UUID orderId;
+
     private OffsetDateTime createdAt;
 
 }

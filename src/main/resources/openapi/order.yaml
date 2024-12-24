@@ -45,7 +45,7 @@ paths:
   /api/orders/{orderId}:
     get:
       summary: Get an order by ID
-      operationId: getOrderById
+      operationId: getOrderByOrderId
       tags:
         - orders
       parameters:
@@ -54,6 +54,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       responses:
         '200':
           description: Order details
@@ -67,14 +68,15 @@ components:
   schemas:
     Order:
       required:
-        - id
+        - orderId
         - item
         - quantity
         - price
       type: object
       properties:
-        id:
+        orderId:
           type: string
+          format: uuid
         item:
           type: string
         quantity:

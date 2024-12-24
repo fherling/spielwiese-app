@@ -6,11 +6,12 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface OrdersPort {
     List<Order> getOrders();
 
-    Order getOrderById(@NotEmpty String orderId);
+    Order getOrderByOrderId(@NotEmpty UUID orderId);
 
     Order createOrder(@Valid @NotNull Order order);
 }

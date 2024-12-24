@@ -8,6 +8,7 @@ import de.frankherling.spielwiese.app.infrastructure.adapter.jpa.outbox.OrdersRe
 import de.frankherling.spielwiese.app.infrastructure.adapter.jpa.outbox.model.OrderEntity;
 import io.micrometer.core.annotation.Counted;
 import io.micrometer.core.annotation.Timed;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -18,8 +19,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +33,7 @@ public class OrdersService implements OrdersPort {
     private final OrdersRepository repository;
     private final OrderEntityMapper mapper;
     private final OutboxPort outboxPort;
+    private final UUIDService uuidService;
 
     @Override
     @Timed
@@ -37,9 +41,7 @@ public class OrdersService implements OrdersPort {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public List<Order> getOrders() {
         List<Order> orders = new ArrayList<>();
-        // Add dummy data for demonstration
-        orders.add(Order.builder().build());
-        orders.add(Order.builder().build());
+        repository.findAll().forEach(orderEntity -> orders.add(mapper.toOrder(orderEntity)));
         return orders;
     }
 
@@ -47,8 +49,8 @@ public class OrdersService implements OrdersPort {
     @Timed
     @Counted
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public Order getOrderById(@NotEmpty String orderId) {
-        return null;
+    public Order getOrderByOrderId(@NotEmpty UUID orderId) {
+        return mapper.toOrder(repository.findOneByOrderId(orderId).orElseThrow(EntityNotFoundException::new));
     }
 
     @Override
@@ -56,10 +58,15 @@ public class OrdersService implements OrdersPort {
     @Counted
     @Transactional(propagation = Propagation.REQUIRED)
     public Order createOrder(@Valid @NotNull Order order) {
-//        log.info("Creating order: {}", order);
-        OrderEntity result = repository.save(mapper.toEntity(order));
+        log.info("Creating order: {}", order);
+        OrderEntity orderEntity = mapper.toEntity(order);
+        orderEntity.setOrderStatus("CREATED");
+        orderEntity.setOrderType("ORDER");
+        orderEntity.setCreatedAt(OffsetDateTime.now());
+        orderEntity.setModefiedAt(orderEntity.getModefiedAt());
+        OrderEntity result = repository.save(orderEntity);
 
-        outboxPort.addMessage("Order created: " + order.getId());
+        outboxPort.addAndPublishMessage("Order created: " + order.getOrderId());
         return mapper.toOrder(result);
     }
 

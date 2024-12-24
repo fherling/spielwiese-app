@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-@Order(Integer.MIN_VALUE)
+@Order(Integer.MAX_VALUE)
 @Slf4j
 public class OTMDCFilter implements Filter {
 

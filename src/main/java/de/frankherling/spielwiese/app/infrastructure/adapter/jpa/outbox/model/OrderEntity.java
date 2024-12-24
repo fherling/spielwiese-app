@@ -12,12 +12,25 @@ import java.util.UUID;
 public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long oid;
+    private Long id;
 
-    @Column(nullable = false)
-    private UUID id;
+    @Column(nullable = false, name = "order_id")
+    private UUID orderId;
 
     @Column(name = "created_at", nullable = false)
     private OffsetDateTime createdAt;
+
+    @Column(name = "modified_at")
+    private OffsetDateTime modefiedAt;
+
+    @Column(name = "order_status", nullable = false)
+    private String orderStatus;
+
+    @Column(name = "order_type", nullable = false)
+    private String orderType;
+
+    @Version
+    @Column(name = "version")
+    long version;
 
 }

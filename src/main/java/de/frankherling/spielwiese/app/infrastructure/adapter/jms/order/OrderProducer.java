@@ -6,12 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 @Slf4j
 @ConditionalOnProperty(value = "adapter.jms.enabled", havingValue = "true")
@@ -25,11 +24,11 @@ public class OrderProducer {
     }
 
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 5000)
     public void scheduleOrder() {
         for (int i = 0; i < 2; i++) {
             createOrder(CreateOrderDTO.builder()
-                    .id(UUID.randomUUID().toString())
+                    .orderId(UUID.randomUUID())
                     .createdAt(OffsetDateTime.now())
                     .build());
         }

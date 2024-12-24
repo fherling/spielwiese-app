@@ -44,11 +44,11 @@ class OrdersApiControllerTest {
 
     @Test
     void testOrdersOrderIdGet() {
-        String orderId = UUID.randomUUID().toString();
-        ResponseEntity<Order> response = cut.getOrderById(orderId);
+        UUID orderId = UUID.randomUUID();
+        ResponseEntity<Order> response = cut.getOrderByOrderId(orderId);
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody());
-        assertEquals(orderId, response.getBody().getId());
+        assertEquals(orderId, response.getBody().getOrderId());
     }
 
     @Test
@@ -61,7 +61,7 @@ class OrdersApiControllerTest {
         ResponseEntity<Order> response = cut.createOrder(order);
         assertEquals(201, response.getStatusCodeValue());
         assertNotNull(response.getBody());
-        assertNotNull(response.getBody().getId());
+        assertNotNull(response.getBody().getOrderId());
         assertEquals("item", response.getBody().getItem());
         assertEquals(1, response.getBody().getQuantity());
         assertEquals(10.0f, response.getBody().getPrice());

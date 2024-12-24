@@ -5,6 +5,7 @@ import de.frankherling.spielwiese.app.infrastructure.adapter.rest.mappers.Orders
 import de.frankherling.spielwiese.app.infrastructure.adapter.rest.order.api.OrdersApi;
 import de.frankherling.spielwiese.app.infrastructure.adapter.rest.order.model.Order;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,22 +21,21 @@ public class OrdersApiController implements OrdersApi {
 
     @Override
     public ResponseEntity<List<Order>> getOrders() {
-
-        return ResponseEntity.ok(ordersMapper.toApi(ordersService.getOrders()));
+        List<de.frankherling.spielwiese.app.domain.model.Order> orders = ordersService.getOrders();
+        if (CollectionUtils.isEmpty(orders)) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(ordersMapper.toApi(orders));
     }
 
     @Override
-    public ResponseEntity<Order> getOrderById(String orderId) {
-        // Add dummy data for demonstration
-        Order order = new Order();
-        order.setId(orderId);
-        return ResponseEntity.ok(order);
+    public ResponseEntity<Order> getOrderByOrderId(UUID orderId) {
+        return ResponseEntity.ok(ordersMapper.toApi(ordersService.getOrderByOrderId(orderId)));
     }
 
     @Override
     public ResponseEntity<Order> createOrder(Order order) {
-        // Add dummy data for demonstration
-        order.setId(UUID.randomUUID().toString());
-        return ResponseEntity.status(201).body(order);
+        de.frankherling.spielwiese.app.domain.model.Order result = ordersService.createOrder(ordersMapper.toDomain(order));
+        return ResponseEntity.status(201).body(ordersMapper.toApi(result));
     }
 }

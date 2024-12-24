@@ -6,7 +6,7 @@ logging:
   level:
     org:
       springframework:
-        security: WARN
+        security: TRACE
         transaction: WARN
     net:
       lbruun: WARN
