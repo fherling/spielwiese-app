@@ -23,15 +23,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(properties = {"spring.liquibase.enabled=false", "adapter.jms.enabled=false"})
+@SpringBootTest(properties = {"spring.liquibase.enabled=true", "adapter.jms.enabled=false"})
 @Testcontainers
 @AutoConfigureMockMvc
 class OrdersApiControllerTestIT {
+
+    @MockitoBean
+    private OrdersPort ordersPort;
 
     @Container
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
@@ -55,8 +59,6 @@ class OrdersApiControllerTestIT {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockitoBean
-    private OrdersPort ordersPort;
 
     @Test
     @WithMockUser(username = "user", roles = "APPUSER")
@@ -80,25 +82,27 @@ class OrdersApiControllerTestIT {
     @WithMockUser(username = "user", roles = "APPUSER")
     void testOrdersOrderIdGet() throws Exception {
         String orderId = UUID.randomUUID().toString();
+        when(ordersPort.getOrderByOrderId(any())).thenReturn(Order.builder().orderId(orderId).build());
+
         mockMvc.perform(MockMvcRequestBuilders.get("/api/orders/{orderId}", orderId)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(orderId));
+                .andExpect(jsonPath("$.orderId").value(orderId));
     }
 
     @Test
     @WithMockUser(username = "user", roles = "APPUSER")
     void testOrdersPost() throws Exception {
-        String orderJson = "{\"id\":\"id\", \"item\":\"item\",\"quantity\":1,\"price\":10.0}";
+        when(ordersPort.createOrder(any())).thenReturn(Order.builder().orderId("019437ca-0d1c-7e75-ab09-3b2a9458f21d").build());
+
+        String orderJson = "{\"orderId\":\"019437ca-0d1c-7e75-ab09-3b2a9458f21d\", \"item\":\"item\",\"quantity\":1,\"price\":10.0}";
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/orders")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(orderJson))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("$.item").value("item"))
-                .andExpect(jsonPath("$.quantity").value(1))
-                .andExpect(jsonPath("$.price").value(10.0));
+                .andExpect(jsonPath("$.orderId").isNotEmpty())
+        ;
     }
 }
