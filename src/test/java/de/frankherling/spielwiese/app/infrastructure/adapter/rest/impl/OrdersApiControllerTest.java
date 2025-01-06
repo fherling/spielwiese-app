@@ -62,16 +62,15 @@ class OrdersApiControllerTest {
 
 
         Order order = new Order();
-        order.setItem("item");
-        order.setQuantity(1);
-        order.setPrice(10.0f);
+        order.setOrderId(UUID.randomUUID());
+        order.setOrderStatus(Order.OrderStatusEnum.PLACED);
+        order.setOrderType(Order.OrderTypeEnum.FREE);
+
 
         ResponseEntity<Order> response = cut.createOrder(order);
         assertEquals(201, response.getStatusCodeValue());
         assertNotNull(response.getBody());
         assertNotNull(response.getBody().getOrderId());
-//        assertEquals("item", response.getBody().getItem());
-//        assertEquals(1, response.getBody().getQuantity());
-//        assertEquals(10.0f, response.getBody().getPrice());
+
     }
 }

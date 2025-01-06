@@ -69,18 +69,22 @@ components:
     Order:
       required:
         - orderId
-        - item
-        - quantity
-        - price
+        - orderStatus
+        - orderType
       type: object
       properties:
         orderId:
           type: string
           format: uuid
-        item:
+        orderStatus:
           type: string
-        quantity:
-          type: integer
-        price:
-          type: number
-          format: float
+          enum:
+          - PLACED
+          - APPROVED
+          - DELIVERED
+          - CANCELLED
+        orderType:
+          type: string
+          enum:
+            - FREE
+            - PAID

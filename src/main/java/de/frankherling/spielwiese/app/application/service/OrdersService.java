@@ -60,8 +60,8 @@ public class OrdersService implements OrdersPort {
     public Order createOrder(@Valid @NotNull Order order) {
         log.info("Creating order: {}", order);
         OrderEntity orderEntity = mapper.toEntity(order);
-        orderEntity.setOrderStatus("CREATED");
-        orderEntity.setOrderType("ORDER");
+        orderEntity.setOrderStatus("PLACED");
+        orderEntity.setOrderType("FREE");
         orderEntity.setCreatedAt(OffsetDateTime.now());
         orderEntity.setModefiedAt(orderEntity.getModefiedAt());
         OrderEntity result = repository.save(orderEntity);
