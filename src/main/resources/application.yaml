@@ -23,6 +23,10 @@ spring:
   cache:
     type: simple
     cache-names: [default, cache1]
+  http:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 11MB
   security:
     oauth2:
       resourceserver:
@@ -118,3 +122,8 @@ tracing:
 adapter:
   jms:
     enabled: true
+minio:
+  endpoint: http://minio-api.local
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket: testbucket
