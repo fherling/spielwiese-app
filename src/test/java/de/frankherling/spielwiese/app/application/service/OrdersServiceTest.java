@@ -39,7 +39,6 @@ class OrdersServiceTest {
 
     @Test
     void getOrders() {
-
         List<Order> result = cut.getOrders();
         assertNotNull(result);
 
